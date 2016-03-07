@@ -75,7 +75,7 @@ def index():
 def specific(person_id):
 	try:
 		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=ProtoNRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
+		cnxn = pyodbc.connect("DSN=dsn;DATABASE=dbase;UID=uname;PWD=pword")
 		print "You are successfully connected now"
 
 		# Table Creation Section
@@ -108,7 +108,7 @@ def specific(person_id):
 def create():
 	try:
 		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=ProtoNRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
+		cnxn = pyodbc.connect("DSN=dsn;DATABASE=dbase;UID=uname;PWD=pword")
 		print "You are successfully connected now'"
 
 		# Table Creation Section
@@ -183,7 +183,7 @@ def update():
 	try:
 
 		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=ProtoNRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
+		cnxn = pyodbc.connect("DSN=dsn;DATABASE=dbase;UID=uname;PWD=pword")
 		print "You are successfully connected now"
 
 		# Table Creation Section
@@ -257,7 +257,7 @@ def update():
 def delete(person_id):
 	try:
 		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=ProtoNRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
+		cnxn = pyodbc.connect("DSN=dsn;DATABASE=dbase;UID=uname;PWD=pword")
 		print "You are successfully connected now"
 
 		# Table Creation Section
@@ -275,115 +275,6 @@ def delete(person_id):
 	except Exception, e:
 		print str(e)
 		return str(e)
-
-# People Project Relation
-# Insert To Relational Table
-@app.route('/people/relation/project/', methods=['POST'])
-def insertpeopleproject():
-	try:
-		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=NRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
-		print "You are successfully connected now"
-
-		# Table Creation Section
-		cursor = cnxn.cursor()
-
-		# Grab JSON from the request
-		try:	
-			pjson = request.get_json()
-		except Exception as e:
-			print "assignment failed"
-			print e
-
-		# Assign values
-		person = pjson['Person']
-		project = pjson['Project']
-
-		# Insert into the relational database
-		cursor.execute("INSERT INTO PeopleProjectRelation (Person, Project) VALUES (?,?)", person, project)
-
-		# Commit
-		cnxn.commit()
-
-		# Return Success
-		return "Successfull relation creation"
-
-	except Exception, e:
-		print str(e)
-		return str(e)
-
-# People System Relation
-# Insert To Relational Table
-@app.route('/people/relation/system/', methods=['POST'])
-def insertpeoplesystem():
-	try:
-		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=NRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
-		print "You are successfully connected now"
-
-		# Table Creation Section
-		cursor = cnxn.cursor()
-
-		# Grab JSON from the request
-		try:	
-			pjson = request.get_json()
-		except Exception as e:
-			print "assignment failed"
-			print e
-
-		# Assign values
-		person = pjson['Person']
-		system = pjson['System']
-
-		# Insert into the relational database
-		cursor.execute("INSERT INTO PeopleSystemRelation (Person, System) VALUES (?,?)", person, system)
-
-		# Commit
-		cnxn.commit()
-
-		# Return Success
-		return "Successfull relation creation"
-
-	except Exception, e:
-		print str(e)
-		return str(e)
-
-# People Service Entry Relation
-# Insert To Relational Table
-@app.route('/people/relation/serviceentry/', methods=['POST'])
-def insertpeopleserviceentry():
-	try:
-		# Connect to Test database
-		cnxn = pyodbc.connect("DSN=ASGARD-LOKI;DATABASE=NRDC;UID=SENSOR\\royals;PWD=Sl@yer23")
-		print "You are successfully connected now"
-
-		# Table Creation Section
-		cursor = cnxn.cursor()
-
-		# Grab JSON from the request
-		try:	
-			pjson = request.get_json()
-		except Exception as e:
-			print "assignment failed"
-			print e
-
-		# Assign values
-		person = pjson['Person']
-		serviceentry = pjson['ServiceEntry']
-
-		# Insert into the relational database
-		cursor.execute("INSERT INTO PeopleServiceEntryRelation (Person, ServiceEntry) VALUES (?,?)", person, serviceentry)
-
-		# Commit
-		cnxn.commit()
-
-		# Return Success
-		return "MODULE: Successful relation creation"
-
-	except Exception, e:
-		print str(e)
-		return str(e)
-
 
 # View Projects from a Person
 @app.route('/people/<person_id>/projects/')
